@@ -63,7 +63,6 @@ The dependence on the dimension $p$ makes FDSA impractical for high dimensional 
 An alternative approach for gradient estimation in high dimensional problems is the 
 simultaneous perturbation technique that appears in \cite{spall},\cite{kushcla}.
 The main idea in this approach is to estimate the gradient by using only two settings of 
-<<<<<<< HEAD
 the $p$-dimensional parameter being optimized. 
 The two settings of the parameter are obtained by
 simultaneously perturbing all the components of the parameter by adding a random 
@@ -71,15 +70,6 @@ direction. A drawback of using random directions for the gradient estimate is th
 or possibly infinite range of these random directions (for e.g. $\pm 1$ symmetric 
 Bernoulli perturbations typically used in 1SPSA algorithm has a range of cardinality $2^p$).
 In this article we consider deterministic perturbations with a range of cardinality
-=======
-the $p$-dimensional parameter vector being optimized. 
-The two settings of the parameter vector are obtained by
-simultaneously perturbing all the components of the parameter vector by adding a random 
-direction. A drawback of using random directions for the gradient estimate is very large
-or possibly infinite range of these random directions (for e.g. $\pm 1$ symmetric 
-Bernoulli perturbations typically used in 1SPSA algorithm has a range of cardinality $2^p$).
-In this article we consider deterministic perturbation vectors with a range of cardinality
->>>>>>> 93fae88bc6e797f3da4d04bebec0b8c716513539
 $p+1$ to improve the convergence of these algorithms. A novel construction of deterministic perturbations 
 based on specially chosen circulant matrix is proposed. Convergence analysis of the proposed
 algorithms is presented along with numerical experiments. 
@@ -139,16 +129,9 @@ Robbins and Monro to optimize an objective using noisy samples. In their work
 Kiefer and Wolfowitz \cite{kiefer1952} use 
 one-sided or two-sided approximation of the gradient. 
 This method has the drawback of using $p+1$ simulations for one-sided approximation and
-<<<<<<< HEAD
 $2p$ simulations for two-sided approximation of the gradient for a 
 $p$-dimensional problem. Later works \cite{kushcla},\cite{spall} have replaced the 
 gradient approximation using finite differences with random perturbations.
-=======
-$2p$ simulations for symmetric difference approximation of the gradient for a 
-$p$-dimensional problem. Later works \cite{kushcla},\cite{spall} have replaced the 
-gradient approximation using finite differences by the popular 
-simultaneous perturbation technique.
->>>>>>> 93fae88bc6e797f3da4d04bebec0b8c716513539
 
 Simultaneous perturbation is a useful technique to estimate the gradient from the function 
 samples, especially in high dimensional problems - see \cite{bhatnagar-book},
@@ -166,19 +149,11 @@ The algorithm 1RDSA-2R differs from 1SPSA-2R, both in the construction as well a
 convergence analysis and performs poorly compared to 1SPSA-2R, see 
 \cite{chin1997comparative} for a detailed comparative study. 
 
-<<<<<<< HEAD
 To enhance the performance of 1SPSA-2R and 1SPSA-1R, \cite{bhatnagar2003two}
 proposed deterministic perturbations based on Hadamard matrices.
 We refer here the variants of 1SPSA-2R and 1SPSA-1R that use Hadamard perturbations as
 1SPSA-2H and 1SPSA-1H. Analogous to their work we propose deterministic perturbations
 for 1RDSA-2R and its  one simulation variant (referred as 1RDSA-1R here) based on a
-=======
-To enhance the performance of 1SPSA-2R and 1SPSA-1R , Shalabh et al., in
-\cite{bhatnagar2003two} propose deterministic perturbations based on Hadamard matrices.
-We refer the variants of 1SPSA-2R and 1SPSA-1R that use Hadamard perturbations as
-1SPSA-2H and 1SPSA-1H. Analogous to their work we propose deterministic perturbations
-for 1RDSA-2R and its  one simulation variant (referred as 1RDSA-1R here) based on 
->>>>>>> 93fae88bc6e797f3da4d04bebec0b8c716513539
 specially chosen circulant matrix.
 
 \tikzstyle{block} = [draw, fill=white, rectangle,
@@ -258,16 +233,10 @@ random perturbations for one simulation algorithms:
 \end{equation}
 Notice that \eqref{eq:2sidedbias} and \eqref{eq:1sidedbias} are achieved asymptotically 
 for a random perturbation direction $d_n$, for example with $\pm 1$ symmetric Bernoulli 
-<<<<<<< HEAD
 components, $d_n$ has to cycle through $2^p$ possible vectors in the range to achieve bias 
 cancellation. Clearly one is motivated to look for perturbations that satisfy similar 
 properties and have a smaller cycle length for faster bias cancellation and thereby 
 improve the performance of the algorithm. 
-=======
-components $d_n$ has to cycle through $2^p$ possible vectors in the range to achieve zero
-expectation. Clearly one is motivated to look for perturbations that satisfy similar 
-properties and has a smaller cycle length for better performance of the algorithm. 
->>>>>>> 93fae88bc6e797f3da4d04bebec0b8c716513539
 Analogous to \eqref{eq:2sidedbias} and \eqref{eq:1sidedbias} we expect deterministic sequence 
 of perturbations to satisfy the following properties:
 \begin{enumerate}[label=\textbf{(P\arabic*)}]
@@ -275,11 +244,7 @@ of perturbations to satisfy the following properties:
   $P \in \mathbb{N}$ such that $\sum\limits_{n=s+1}^{s+P}D_n=0$ and,
   \item  $\sum\limits_{n=s+1}^{s+P}d_n=0.$
 \end{enumerate}
-<<<<<<< HEAD
 In the following sections we construct deterministic perturbations which satisfy (P1) and (P2)
-=======
-In the following sections we construct deterministic perturbations which satisfy P1 and P2
->>>>>>> 93fae88bc6e797f3da4d04bebec0b8c716513539
 and provide convergence results for the resulting 1RDSA-2C and 1RDSA-1C algorithms.
 
 The rest of the paper is organized as follows: In section \ref{sec:algo}, we
@@ -323,7 +288,7 @@ or \eqref{eq:grad-onesided}.
 Algorithm \ref{alg:structure} presents the basic structure of 
 1RDSA-2C and 1RDSA-1C. We describe the individual 
 components of algorithm \ref{alg:structure} below.
-\subsection{Deterministic Perturbations}
+\subsection{Deterministic Pertubations}
 Let $\delta_n, n\geq 0$ denote a sequence of diminishing positive real numbers satisfying 
 assumption A2 in section \ref{sec:convergenceresults} and 
 $d_n = (d_n^1,\ldots,d_n^p)\tr$ denote $(p+1)$ mod $n$ column of $Q.$
@@ -373,7 +338,6 @@ uses only one function sample $y_{n}^{+}$ at $\theta_n+\delta_n d_n$.
 We presented a novel construction of deterministic perturbations for 
 1RDSA-2R and 1RDSA-1R algorithms and showed that the resulting algorithms 
 1RDSA-2C and 1RDSA-1C are provably convergent. 
-<<<<<<< HEAD
 The advantage with our deterministic perturbation construction is that the
 same set of perturbations can be used for both two simulation
 and one simulation variants. These perturbations also have a smaller cycle length compared to 
@@ -381,15 +345,6 @@ Hadmard matrix based perturbations. Numerical experiments demonstrated that 1RDS
 1SPSA-2R (1SPSA-1R) and 1SPSA-2H (1SPSA-1H).
 As future work, it would be interesting to derive similar methods in the context of 
 2RDSA. A challenging future direction would be to derive weak convergence results when
-=======
-The advantage with deterministic perturbations is that it uses 
-same perturbations for both two simulation
-and one simulation variants. It also has smaller cycle length compared to Hadamard matrix
-based perturbations. Numerical experiments demonstrated that 1RDSA-2C (1RDSA-1C) outperforms 
-1SPSA-2R (1SPSA-1R) and 1SPSA-2H (1SPSA-1H).
-As future work, it would be interesting to derive similar methods in the context of 
-2RDSA. A challenging future work could be to derive weak convergence results when
->>>>>>> 93fae88bc6e797f3da4d04bebec0b8c716513539
 deterministic perturbations are used.
 
 \bibliography{reference}
