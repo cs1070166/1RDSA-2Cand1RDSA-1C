@@ -22,7 +22,7 @@ few minor alterations. The assumptions are listed below. Also $\|.\|$ denotes 2-
 %  distributed. Moreover $\mathbb{E}[d_nd_n^T]=I.$
  
  \item The iterates $\theta_n$ remain uniformly bounded almost surely, i.e.,
- $$ \sup_n\|\theta_n\|<\infty, a.s.$$
+ $ \sup_n\|\theta_n\|<\infty, \text{ a.s.}$
 
  \item The ODE $\dot{\theta}(t)=-\nabla J(\theta(t))$ has a compact set 
  $G \subset \mathbb{R}^p$ as its set of asymptotically stable equilibria
@@ -40,33 +40,36 @@ $H^{-1/2}$. Also note that it takes only $O(p)$ operations to compute $H^{-1/2}$
 using the lemma and circulant structure of $H^{-1/2}$.
 \begin{lemma}
  \label{lemma: gen Sherman-Morisson}
-Let $I$ be a $p \times p$ identity matrix and $u = 
-\left[
- \begin{array}{cccc}
- 1 \\ 1 \\  \vdots \\ 1 
-\end{array} \right]$ be a $p \times 1$ vector of 1s, then
+Let $I$ be a $p \times p$ identity matrix and \\
+$u=[1,1, \cdots 1]^{T}$
+% $u = 
+% \left[
+%  \begin{array}{cccc}
+%  1 \\ 1 \\  \vdots \\ 1 
+% \end{array} \right]$ 
+be a $p \times 1$ column vector of 1s, then
 $$ (I+uu^T)^{-1/2}= I-\frac{uu^T}{p}+\frac{uu^T}{p\sqrt{(1+p)}}.$$
 \end{lemma}
 \begin{proof}
 It is enough to show that
 $$(I+uu^T)\Bigg{[}I-\frac{uu^T}{p}+\frac{uu^T}{p\sqrt{(1+p)}}\Bigg{]}^2=I.$$
-% Using $\|u\|^2=u^Tu=p$ in the expansion of $\Bigg{[}I-\frac{uu^T}{p}+\frac{uu^T}{p\sqrt{(1+p)}}\Bigg{]}^2$
-% gives the result.
-Using $\|u\|^2=u^Tu=p$ we have
-\begin{align*}
- & (I+uu^T)\Bigg{[}I-\frac{uu^T}{p}+\frac{uu^T}{p\sqrt{(1+p)}}\Bigg{]}^2\\
- &= (I+uu^T)\Bigg{[}I-\frac{uu^T}{p}+\frac{uu^T}{p\sqrt{(1+p)}}\\
- &-\frac{uu^T}{p}+\frac{uu^Tuu^T}{p^2}-\frac{uu^Tuu^T}{p^2\sqrt{(1+p)}}\\
- &+\frac{uu^T}{p\sqrt{(1+p)}}-\frac{uu^Tuu^T}{p^2\sqrt{(1+p)}}+\frac{uu^Tuu^T}{p^2(1+p)}\Bigg{]}\\
- &= (I+uu^T)\Bigg{[}I-\frac{uu^T}{p}+\frac{uu^T}{p\sqrt{(1+p)}}\\
- &-\frac{uu^T}{p}+\frac{uu^T}{p}-\frac{uu^T}{p\sqrt{(1+p)}}\\
- &+\frac{uu^T}{p\sqrt{(1+p)}}-\frac{uu^T}{p\sqrt{(1+p)}}+\frac{uu^T}{p(1+p)}\Bigg{]}\\
- &=(I+uu^T)\Bigg{[}I-uu^T(\frac{1}{p}-\frac{1}{p(1+p)})\Bigg{]}\\
- &=(I+uu^T)\Bigg{[}I-\frac{uu^T}{1+p}\Bigg{]}\\
- &=I+uu^T-\frac{uu^T}{1+p}-\frac{puu^T}{1+p}\\
- &=I
-\end{align*}
-proving the lemma.
+Using $\|u\|^2=u^Tu=p$ in the expansion of $\Big{[}I-\frac{uu^T}{p}+\frac{uu^T}{p\sqrt{(1+p)}}\Big{]}^2$
+gives the result.
+% Using $\|u\|^2=u^Tu=p$ we have
+% \begin{align*}
+%  & (I+uu^T)\Bigg{[}I-\frac{uu^T}{p}+\frac{uu^T}{p\sqrt{(1+p)}}\Bigg{]}^2\\
+%  &= (I+uu^T)\Bigg{[}I-\frac{uu^T}{p}+\frac{uu^T}{p\sqrt{(1+p)}}\\
+%  &-\frac{uu^T}{p}+\frac{uu^Tuu^T}{p^2}-\frac{uu^Tuu^T}{p^2\sqrt{(1+p)}}\\
+%  &+\frac{uu^T}{p\sqrt{(1+p)}}-\frac{uu^Tuu^T}{p^2\sqrt{(1+p)}}+\frac{uu^Tuu^T}{p^2(1+p)}\Bigg{]}\\
+%  &= (I+uu^T)\Bigg{[}I-\frac{uu^T}{p}+\frac{uu^T}{p\sqrt{(1+p)}}\\
+%  &-\frac{uu^T}{p}+\frac{uu^T}{p}-\frac{uu^T}{p\sqrt{(1+p)}}\\
+%  &+\frac{uu^T}{p\sqrt{(1+p)}}-\frac{uu^T}{p\sqrt{(1+p)}}+\frac{uu^T}{p(1+p)}\Bigg{]}\\
+%  &=(I+uu^T)\Bigg{[}I-uu^T(\frac{1}{p}-\frac{1}{p(1+p)})\Bigg{]}\\
+%  &=(I+uu^T)\Bigg{[}I-\frac{uu^T}{1+p}\Bigg{]}\\
+%  &=I+uu^T-\frac{uu^T}{1+p}-\frac{puu^T}{1+p}\\
+%  &=I
+%  \end{align*}
+%  proving the lemma.
 \end{proof}
 Let $H$ defined as in \eqref{eq:H} and $Q=\sqrt{p+1}[H^{-1/2},-H^{-1/2}u].$
 Let the pertubations $d_n$ be the columns of Q. 
@@ -85,13 +88,12 @@ Let the pertubations $d_n$ be the columns of Q.
  u\\ 1 \end{array}\right]=0 \text{ for the choice } s=0.$
  Consider
  \begin{align*}
- & \sum_{n=0}^{P}D_n=\sum_{n=1}^{P}(d_nd_n^T-I)\\
- & =\sum_{n=1}^{P}(d_nd_n^T)-(p+1)I\\
+ & \sum_{n=0}^{P}D_n=\sum_{n=1}^{P}(d_nd_n^T-I)=\sum_{n=1}^{P}(d_nd_n^T)-(p+1)I\\
  & =QQ^T-(p+1)I\\
  & =(p+1)([H^{-1/2},-H^{-1/2}u][H^{-1/2},-H^{-1/2}u]^T-I)\\
- & =(p+1)([H^{-1}+H^{-1/2}uu^TH^{-1/2}]-I)\\
- & =(p+1)(H^{-1/2}(I+uu^T)H^{-1/2}-I)\\
- & =(p+1)(H^{-1/2}(H)H^{-1/2}-I)\\
+ %& =(p+1)([H^{-1}+H^{-1/2}uu^TH^{-1/2}]-I)\\
+ %& =(p+1)(H^{-1/2}(I+uu^T)H^{-1/2}-I)\\
+ %& =(p+1)(H^{-1/2}(H)H^{-1/2}-I)\\
  & = 0.
  \end{align*}
  In addition,
@@ -100,8 +102,7 @@ Let the pertubations $d_n$ be the columns of Q.
  u\\ 1 \end{array}\right]
  & = \sqrt{p+1}([H^{-1/2},-H^{-1/2}u]) \left[\begin{array}{cccc}
  u\\ 1 \end{array}\right]\\
- & = \sqrt{p+1}(H^{-1/2}u-H^{-1/2}u)\\
- & = 0
+ & = \sqrt{p+1}(H^{-1/2}u-H^{-1/2}u)= 0,
  \end{align*}
 proving the lemma.
 \end{proof}
@@ -123,9 +124,9 @@ proving the lemma.
  \|\theta_{n+k}-\theta_n\| &\leq \sum_{j=n}^{n+k-1}a_j\Bigg{|}\frac{J(\theta_j+\delta_{j} d_j)-J(\theta_j-\delta_{j} d_j)}{2\delta_j}\Bigg{|}\|d_j\|\\
  &+\sum_{j=n}^{n+k-1}a_j\|M_{j+1}\|
 \end{split}
- \end{align*}
+\end{align*}
 Now clearly,
-$$N_n=\sum_{j=0}^{n-1}a_jM_{j+1}, n\geq1,$$
+$N_n=\sum\limits_{j=0}^{n-1}a_jM_{j+1}, n\geq1,$
 forms a martingale sequence with respect to the filtration $\{\F_n\}$.
 Further, from the assumption (A6) we have,
 \begin{align*}
@@ -155,17 +156,17 @@ $$|J(\theta_j-\delta_j d_j)|\leq \tilde{B}(1+\|\theta_j-\delta_j d_j\|).$$
 From assumption (A1), it follows that
 $$\sup_j\Big{\|}\Big{(}J(\theta_j+\delta_j d_j)-J(\theta_j-\delta_j d_j)\Big{)}d_j\Big{\|}\leq \tilde{K}<\infty,$$
 for some $\tilde{K}>0.$ Thus,
-$$\|\theta_{n+k}-\theta_n\| \leq \tilde{K}\sum_{j=n}^{n+k-1}\frac{a_j}{\delta_j}+\|\sum_{j=n}^{n+k-1}a_jM_{j+1}\|$$
-$$\rightarrow 0 \text{ a.s. with } n \rightarrow \infty$$
+\newline
+$\|\theta_{n+k}-\theta_n\| \leq \tilde{K}\sum\limits_{j=n}^{n+k-1}\frac{a_j}{\delta_j}+\|\sum_{j=n}^{n+k-1}a_jM_{j+1}\|$
+\newline
+$\rightarrow 0 \text{ a.s. with } n \rightarrow \infty,$
 proving the lemma.
 \end{proof}
 \begin{lemma}
-\begin{align*}
-&\text{ For any } m \geq0,\\
-&\Big{\|}\sum_{n=m}^{m+P-1}\frac{a_n}{a_m}D_n\nabla J(\theta_n)\Big{\|}\rightarrow 0 \text{ and }\\
-&\Big{\|}\sum_{n=m}^{m+P-1}\frac{b_n}{b_m}d_nJ(\theta_n)\Big{\|}\rightarrow 0,
-\text{almost surely, as } m \rightarrow \infty.
-\end{align*}
+$\text{ For any } m \geq0,$
+$\Big{\|}\sum\limits_{n=m}^{m+P-1}\frac{a_n}{a_m}D_n\nabla J(\theta_n)\Big{\|} \text{ and }$
+$\Big{\|}\sum\limits_{n=m}^{m+P-1}\frac{b_n}{b_m}d_nJ(\theta_n)\Big{\|}\rightarrow 0,$
+$\text{almost surely, as } m \rightarrow \infty.$
 \end{lemma}
 \begin{proof}
  From lemma 3, it can be seen that
@@ -182,34 +183,28 @@ proving the lemma.
      -\sum_{n=m+1}^{m+P-1}D_n\nabla J(\theta_{m})\Big{\|}\\
   &=\Big{\|}\sum_{n=m+1}^{m+P-1}D_n\Big{(}\frac{a_n}{a_m}\nabla J(\theta_n)
   -\nabla J(\theta_{m})\Big{)}\Big{\|}\\
-  &\leq \bar{C}\sum_{n=m+1}^{m+P-1}\Big{\|}\Big{(}\frac{a_n}{a_m}\nabla J(\theta_n)
+  &\leq\sum_{n=m+1}^{m+P-1}{\|}D_n{\|}\Big{\|}\Big{(}\frac{a_n}{a_m}\nabla J(\theta_n)
   -\nabla J(\theta_{m})\Big{)}\Big{\|}\\
-  &=\bar{C}\sum_{n=m+1}^{m+P-1}\Bigg{\|}\Big{(}\frac{a_n}{a_m}-1\Big{)}\nabla J(\theta_n)
-   +\Big{(}\nabla J(\theta_n)-\nabla J(\theta_{m})\Big{)}\Bigg{\|}\\
-  &\leq \bar{C}\sum_{n=m+1}^{m+P-1}\Bigg{\|}\Big{(}\frac{a_n}{a_m}-1\Big{)}\nabla J(\theta_n)\Bigg{\|}
-  +\Bigg{\|}\nabla J(\theta_n)-\nabla J(\theta_{m})\Bigg{\|}
- % \\ &\text{The claim now follows from assumptions (A1) and (A2).}\\
+  % &\leq\bar{C}\sum_{n=m+1}^{m+P-1}\Big{\|}\Big{(}\frac{a_n}{a_m}-1\Big{)}\nabla J(\theta_n)
+  % +\Big{(}\nabla J(\theta_n)-\nabla J(\theta_{m})\Big{)}\Big{\|}\\
+  &\leq \bar{C}\sum_{n=m+1}^{m+P-1}\Big{\|}\Big{(}\frac{a_n}{a_m}-1\Big{)}\nabla J(\theta_n)\Big{\|}
+  +\Big{\|}\nabla J(\theta_n)-\nabla J(\theta_{m})\Big{\|}
  \end{align*}
  The claim now follows from assumptions (A1) and (A2).
  Now observe that $\|J(\theta_{m+k})-J(\theta_{m})\|\rightarrow 0$ as $m\rightarrow \infty,$
  for all $k \in \{1,\cdots,P\}$ as a consequence of (A1)
- and lemma3. Moreover from $d_m=-\sum_{n=m+1}^{m+P-1}d_n$ we have
+ and lemma3. Moreover from $d_m=-\sum\limits_{n=m+1}^{m+P-1}d_n$ we have
 \begin{align*}
-%   &\text{Now observe that $\|J(\theta_{m+k})-J(\theta_{m})\|\rightarrow 0$ as $m\rightarrow \infty,$}\\
-%   &\text{for all $k \in \{1,\cdots,P\}$ as a consequence of (A1)}\\
-%   &\text{and lemma3. Moreover from $d_m=-\sum_{n=m+1}^{m+P-1}d_n$ we have}\\
-  & \Bigg{\|}\sum_{n=m}^{m+P-1}\frac{b_n}{b_m}d_n J(\theta_n)\Bigg{\|}\\
-  & =\Bigg{\|}\sum_{n=m+1}^{m+P-1}\frac{b_n}{b_m}d_n J(\theta_n)+d_m J(\theta_{m})\Bigg{\|}\\
-  & =\Bigg{\|}\sum_{n=m+1}^{m+P-1}\frac{b_n}{b_m}d_n J(\theta_n)-\sum_{n=m+1}^{m+P-1}d_n J(\theta_{m})\Bigg{\|}\\
-  & =\Bigg{\|}\sum_{n=m+1}^{m+P-1}d_n\Big{(}\frac{b_n}{b_m}J(\theta_n)-J(\theta_{m})\Big{)}\Bigg{\|}\\
+  & \Big{\|}\sum_{n=m}^{m+P-1}\frac{b_n}{b_m}d_n J(\theta_n)\Big{\|}\\
+  & =\Big{\|}\sum_{n=m+1}^{m+P-1}\frac{b_n}{b_m}d_n J(\theta_n)+d_m J(\theta_{m})\Big{\|}\\
+  & =\Big{\|}\sum_{n=m+1}^{m+P-1}\frac{b_n}{b_m}d_n J(\theta_n)-\sum_{n=m+1}^{m+P-1}d_n J(\theta_{m})\Big{\|}\\
+  & =\Big{\|}\sum_{n=m+1}^{m+P-1}d_n\Big{(}\frac{b_n}{b_m}J(\theta_n)-J(\theta_{m})\Big{)}\Big{\|}\\
   & \leq \sum_{n=m+1}^{m+P-1}\|d_n\|\Big{\|}\Big{(}\frac{b_n}{b_m}J(\theta_n)-J(\theta_{m})\Big{)}\Big{\|}\\
-  & \leq C \sum_{n=m+1}^{m+P-1}\Big{\|}\Big{(}\frac{b_n}{b_m}J(\theta_n)-J(\theta_{m})\Big{)}\Big{\|}\\
-  & = C \sum_{n=m+1}^{m+P-1} \Bigg{\|}\Big{(}\frac{b_n}{b_m}-1\Big{)} J(\theta_n)
-  +\Big{(} J(\theta_n)-J(\theta_{m})\Big{)}\Bigg{\|}\\
-  &\leq C \sum_{n=m+1}^{m+P-1}\Bigg{\|}\Big{(}\frac{b_n}{b_m}-1\Big{)} J(\theta_n)\Bigg{\|}
-  +\Bigg{\|}\Big{(} J(\theta_n)- J(\theta_{m})\Big{)}\Bigg{\|}
-% \\  &\text{The claim now follows as a consequence of}\\ 
-%  &\text{assumptions (A1) and (A2).}
+  % & \leq C \sum_{n=m+1}^{m+P-1}\Big{\|}\Big{(}\frac{b_n}{b_m}J(\theta_n)-J(\theta_{m})\Big{)}\Big{\|}\\
+  % & = C \sum_{n=m+1}^{m+P-1} \Bigg{\|}\Big{(}\frac{b_n}{b_m}-1\Big{)} J(\theta_n)
+  % +\Big{(} J(\theta_n)-J(\theta_{m})\Big{)}\Bigg{\|}\\
+  &\leq C \sum_{n=m+1}^{m+P-1}\Big{\|}\Big{(}\frac{b_n}{b_m}-1\Big{)} J(\theta_n)\Big{\|}
+  +\Big{\|}\Big{(} J(\theta_n)- J(\theta_{m})\Big{)}\Big{\|}
 \end{align*}
 The claim now follows as a consequence of assumptions (A1) and (A2).
 \end{proof}
@@ -219,17 +214,14 @@ The claim now follows as a consequence of assumptions (A1) and (A2).
 \end{theorem}
 \begin{proof}
  Note that
- \begin{align*}
-  \begin{split}
-  & \theta_{n+P} = \theta_n- \\ 
-  &\sum_{l=n}^{n+P-1}a_l\Big{(}\frac{J(\theta_l+\delta_l d_l)-J(\theta_l-\delta_l d_l)}{2\delta_l}d_l+M_{l+1}\Big{)}.
- \end{split}
- \end{align*}
+ \begin{equation*}
+  \theta_{n+P} = \theta_n-\sum\limits_{l=n}^{n+P-1}a_l\Big{[}\frac{J(\theta_l+\delta_l d_l)-J(\theta_l-\delta_l d_l)}{2\delta_l}d_l+M_{l+1}\Big{]}.
+ \end{equation*}
 It follows that
  \begin{align*}
   \begin{split}
-  & \theta_{n+P} = \theta_n- \sum_{l=n}^{n+P-1}a_l\nabla J(\theta_l)\\ 
-  & -\sum_{l=n}^{n+P-1}a_l(d_ld_l^T-I)\nabla J(\theta_l)\\
+  & \theta_{n+P} = \theta_n-\sum_{l=n}^{n+P-1}a_l\nabla J(\theta_l) 
+   -\sum_{l=n}^{n+P-1}a_l(d_ld_l^T-I)\nabla J(\theta_l)\\
   & -\sum_{l=n}^{n+P-1}a_l \xi^{1}(\delta_l)-\sum_{l=n}^{n+P-1}a_lM_{l+1}\\
   \end{split}
  \end{align*}
@@ -241,7 +233,6 @@ $$\theta_{n+1}=\theta_n-a_n(\nabla J(\theta_n)+o(\delta)+M_{n+1}).$$
 Hence from chapter 2 of \cite{borkar2008stochastic} we have that $\theta_n, n\geq0$ converge to
 local minima of the function $J.$
 \end{proof}
-
 \begin{theorem}
   $\theta_n, n\geq0$ obtained from 1RDSA-1C satisfy $\theta_n \rightarrow G$
  almost surely.
@@ -254,13 +245,13 @@ Note that
 It follows that
  \begin{align*}
   \begin{split}
-  & \theta_{n+P} = \theta_n- \sum_{l=n}^{n+P-1}a_l\nabla J(\theta_l)\\ 
-  & -\sum_{l=n}^{n+P-1}a_l\frac{J(\theta_l)}{\delta_l}d_l-\sum_{l=n}^{n+P-1}a_l(d_ld_l^T-I)\nabla J(\theta_l)\\
-  & -\sum_{l=n}^{n+P-1}a_lO(\delta_l)
-  -\sum_{l=n}^{n+P-1}a_lM_{l+1}
+  & \theta_{n+P} = \theta_n- \sum_{l=n}^{n+P-1}a_l\nabla J(\theta_l) 
+  -\sum_{l=n}^{n+P-1}a_l\frac{J(\theta_l)}{\delta_l}d_l\\
+  &-\sum_{l=n}^{n+P-1}a_l(d_ld_l^T-I)\nabla J(\theta_l)-\sum_{l=n}^{n+P-1}a_lO(\delta_l)\\
+  &-\sum_{l=n}^{n+P-1}a_lM_{l+1}
  \end{split}
  \end{align*}
- Now we observe that
+ Now we observe that the third term on the RHS is
  \begin{align*}
  & \sum_{l=n}^{n+P-1}a_l\frac{J(\theta_l)}{\delta_l}d_l= \sum_{l=n}^{n+P-1} b_{l}J(\theta_l)d_l\\
  & = b_n\sum_{l=n}^{n+P-1}\frac{b_l}{b_n}\frac{J(\theta_l)}{\delta_l}d_l=b_n\xi^{1}_{n},

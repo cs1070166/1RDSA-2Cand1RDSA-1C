@@ -156,14 +156,12 @@ We refer here the variants of 1SPSA-2R and 1SPSA-1R that use Hadamard perturbati
 1SPSA-2H and 1SPSA-1H. Analogous to their work we propose deterministic perturbations
 for 1RDSA-2R and its  one simulation variant (referred as 1RDSA-1R here) based on a
 specially chosen circulant matrix.
-
 \tikzstyle{block} = [draw, fill=white, rectangle,
    minimum height=3em, minimum width=6em]
 \tikzstyle{sum} = [draw, fill=white, circle, node distance=1cm]
 \tikzstyle{input} = [coordinate]
 \tikzstyle{output} = [coordinate]
 \tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
-
 \begin{figure}[t]
     \centering
 \scalebox{0.8}{\begin{tikzpicture}[auto, node distance=2cm,>=latex']
@@ -179,8 +177,7 @@ specially chosen circulant matrix.
 \caption{Simulation Optimization Model}
 \label{fig:so}
 \end{figure}
-
-\section{Motivation}
+\section{MOTIVATION}
 Here we motivate the necessary conditions that deterministic perturbations should satisfy.
 Analogous properties for Hadamard matrix based perturbations are well motivated in 
 \cite{bhatnagar-book}.
@@ -195,29 +192,40 @@ conditions (see (A2) in section \ref{sec:convergenceresults}) and $\widehat\nabl
 J(\theta)$ is an estimate of the gradient of the objective function $J$.
 Thus, \eqref{eq:grad-descent} can be considered as 
 the stochastic version of the well-known gradient descent method for optimization. 
-
-Now consider the Taylor series expansion of $J(\theta_n+\delta_nd_n)$ around
+% Now consider the Taylor series expansion of $J(\theta_n+\delta_nd_n)$ around
+% $\theta_n$, we have
+% \begin{equation} \label{eq:pTaylor}
+% J(\theta_n+\delta_nd_n)=
+% J(\theta_n)+\delta_nd_n^T \nabla J(\theta_n)+o(\delta_n).
+% \end{equation}
+% Similarly, an expansion of $J(\theta_n-\delta_n d_n)$ around $\theta_n$ gives
+% \begin{equation} \label{eq:nTaylor}
+% J(\theta_n-\delta_n d_n)=
+% J(\theta_n)-\delta_n d_n^T \nabla J(\theta_n)+o(\delta_n).
+% \end{equation}
+% From \eqref{eq:pTaylor} and \eqref{eq:nTaylor}, we have
+% \begin{align}\label{eq:Taylor}
+% &\frac{J(\theta_n+\delta_n d_n)-J(\theta_n-\delta_n d_n)}{2\delta_n}d_n
+% - \nabla J(\theta_n) \\
+% &= (d_nd_n^T-I)\nabla J(\theta_n)+o(\delta_n).
+% \end{align}
+Now consider the Taylor series expansion of $J(\theta_n \pm \delta_nd_n)$ around
 $\theta_n$, we have
-\begin{equation} \label{eq:pTaylor}
-J(\theta_n+\delta_nd_n)=
-J(\theta_n)+\delta_nd_n^T \nabla J(\theta_n)+o(\delta_n).
+ \begin{equation} \label{eq:pmTaylor}
+ J(\theta_n \pm \delta_nd_n)=
+ J(\theta_n) \pm \delta_nd_n^T \nabla J(\theta_n)+o(\delta_n).
 \end{equation}
-Similarly, an expansion of $J(\theta_n-\delta_n d_n)$ around $\theta_n$ gives
-\begin{equation} \label{eq:nTaylor}
-J(\theta_n-\delta_n d_n)=
-J(\theta_n)-\delta_n d_n^T \nabla J(\theta_n)+o(\delta_n).
-\end{equation}
-From \eqref{eq:pTaylor} and \eqref{eq:nTaylor}, we have
+From \eqref{eq:pmTaylor}, we have
 \begin{align}\label{eq:Taylor}
 &\frac{J(\theta_n+\delta_n d_n)-J(\theta_n-\delta_n d_n)}{2\delta_n}d_n
-- \nabla J(\theta_n) \\
+ - \nabla J(\theta_n) \\
 &= (d_nd_n^T-I)\nabla J(\theta_n)+o(\delta_n).
 \end{align}
 Note that $(d_nd_n^T-I)\nabla J(\theta_n)$ constitutes the bias in the
 gradient estimate and
 from the assumption (A3) in section \ref{sec:convergenceresults}
 \begin{equation}\label{eq:2sidedbias}
-\mathbb{E}\Bigg{[}(d_nd_n^T-I)\nabla J(\theta_n)\Bigg{|}\theta_n\Bigg{]}=0.
+\mathbb{E}\Big{[}(d_nd_n^T-I)\nabla J(\theta_n)\Big{|}\theta_n\Big{]}=0.
 \end{equation}
 In the case of a one-simulation algorithm with parameter $\theta_n+\delta_n d_n$,
 a similar Taylor series expansion gives
@@ -230,7 +238,7 @@ a similar Taylor series expansion gives
 One expects the following to hold in addition to \eqref{eq:2sidedbias} in the case of 
 random perturbations for one simulation algorithms:
 \begin{equation}\label{eq:1sidedbias}
-\mathbb{E}\Bigg{[}\frac{J(\theta_n)}{\delta_n}d_n\Bigg{|}\theta_n\Bigg{]}=0. 
+\mathbb{E}\Big{[}\frac{J(\theta_n)}{\delta_n}d_n\Big{|}\theta_n\Big{]}=0. 
 \end{equation}
 Notice that \eqref{eq:2sidedbias} and \eqref{eq:1sidedbias} are achieved asymptotically 
 for a random perturbation direction $d_n$, for example with $\pm 1$ symmetric Bernoulli 
@@ -255,8 +263,7 @@ In section \ref{sec:convergenceresults},
 we present the convergence results for 1RDSA-2C and 1RDSA-1C algorithms.
 In section~\ref{sec:expts}, we present the results from numerical experiments and finally, 
 in section~\ref{sec:conclusions}, we provide the concluding remarks.
-
-\section{Structure of the algorithm}
+\section{STRUCTURE OF THE ALGORITHM}
 \label{sec:algo}
 \begin{algorithm}[t]
 \begin{algorithmic}
@@ -270,7 +277,6 @@ in section~\ref{sec:conclusions}, we provide the concluding remarks.
  \item $a_n, n \geq 0,$ step-size sequence satisfying assumption \ref{stepsizes} of 
  section \ref{sec:convergenceresults};
 \end{itemize}
-
 \For{$n = 1,2,\ldots n_{\text{end}}$}	
 	\State Let $d_n$ be mod$(n,p+1)^{\text{th}}$ column of $Q$. 
 	\State Update the parameter as follows:
@@ -285,7 +291,6 @@ or \eqref{eq:grad-onesided}.
 \caption{Basic structure of 1RDSA-2C and 1RDSA-1C algorithms.}
 \label{alg:structure}
 \end{algorithm}
-
 Algorithm \ref{alg:structure} presents the basic structure of 
 1RDSA-2C and 1RDSA-1C. We describe the individual 
 components of algorithm \ref{alg:structure} below.
@@ -327,13 +332,8 @@ The estimate of the gradient $\nabla J(\theta_n)$ is given by
 Observe that while 1RDSA-2C algorithm uses two function samples $y_{n}^{+}$ and $y_{n}^{-}$ 
 at $\theta_n+\delta_n d_n$ and $\theta_n - \delta_n d_n$, 1RDSA-1C algorithm 
 uses only one function sample $y_{n}^{+}$ at $\theta_n+\delta_n d_n$.
-
-
 \input{results}
 \input{SimExpmts}
-
-
-
 \section{CONCLUSIONS}
 \label{sec:conclusions}
 We presented a novel construction of deterministic perturbations for 
@@ -347,8 +347,6 @@ Hadmard matrix based perturbations. Numerical experiments demonstrated that 1RDS
 As future work, it would be interesting to derive similar methods in the context of 
 2RDSA. A challenging future direction would be to derive weak convergence results when
 deterministic perturbations are used.
-
 \bibliography{reference}
 \bibliographystyle{IEEEtran}
-
 \end{document}
