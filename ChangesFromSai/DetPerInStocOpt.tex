@@ -1,0 +1,352 @@
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+%\usepackage{graphics} % for pdf, bitmapped graphics files
+%\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+%\usepackage{amsmath} % assumes amsmath package installed
+%\usepackage{amssymb}  % assumes amsmath package installed
+
+\usepackage{macros}
+
+
+\title{\LARGE \bf
+ Deterministic Perturbations For Simultaneous Perturbation Methods Using
+ Circulant Matrices.
+}
+
+
+
+\author{Chandramouli K $^\sharp$, D. Sai Koti Reddy$^\dagger$, Shalabh Bhatnagar$^\ddag$
+\thanks{
+Department of Computer Science and Automation,
+Indian Institute of Science, Bangalore,
+E-Mail: $^\sharp$chandramouli.kamanchi@csa.iisc.ernet.in.
+$^\dagger$danda.reddy@csa.iisc.ernet.in.
+$^\ddag$shalabh@csa.iisc.ernet.in.}
+\thanks{$^\star$Supported by Robert Bosch Center for Cyber-Physical Systems, IISc.}
+% \thanks{$\ast$ Supported by NSF under Grants CMMI-1434419, CNS-1446665,
+% and CMMI-1362303,  by AFOSR under Grant FA9550-15-10050, and
+% by the Robert Bosch Centre for Cyber-Physical Systems, IISc.
+% }
+}
+
+
+
+\begin{document}
+% 
+% 
+\maketitle
+% \thispagestyle{empty}
+% \pagestyle{empty}
+% 
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+We consider the problem of finding optimal parameters under simulation optimization setup.
+For a $p$-dimensional parameter optimization, the classical Kiefer-Wolfowitz Finite Difference Stochastic 
+Approximation (FDSA) scheme uses $p+1$ or $2p$ simulations of the system feedback for one-sided 
+and two-sided gradient estimates respectively.
+The dependence on the dimension $p$ makes FDSA impractical for high dimensional problems.
+An alternative approach for gradient estimation in high dimensional problems is the 
+simultaneous perturbation technique.
+%that appears in \cite{spall},\cite{kushcla}.
+The main idea in this approach is to estimate the gradient by using only two settings of 
+the $p$-dimensional parameter being optimized. 
+The two settings of the parameter are obtained by
+simultaneously perturbing all the components of the parameter by adding a random 
+direction. A drawback of using random directions for the gradient estimate is the very large
+or possibly infinite range of these random directions (for e.g. $\pm 1$ symmetric 
+Bernoulli perturbations typically used in 1SPSA algorithm has a range of cardinality $2^p$).
+In this article we consider deterministic perturbations with a range of cardinality
+$p+1$ to improve the convergence of these algorithms. A novel construction of deterministic perturbations 
+based on specially chosen circulant matrix is proposed. Convergence analysis of the proposed
+algorithms is presented along with numerical experiments. 
+\end{abstract}
+
+% Some well known 1st order optimization
+% methods used to solve these problems are Simultaneous Perturbation Stochastic Approximation
+% (1SPSA) \cite{spall} and Random Directions Stochastic Approximation (1RDSA) \cite{kushcla}
+% and their one simulation variants (1s-1SPSA)\cite{spall2},(1s-1RDSA)\cite{bhatnagar-book}.
+% While (1SPSA) and (1RDSA) use two simulations per iterate, (1s-1SPSA) and (1s-1RDSA) use
+% one simulation per iterate but have high bias.
+% All these methods use random perturbations to simulataneously perturb all the parameter 
+% components and approximate the gradient. In \cite{bhatnagar2003two} Shalabh et al., introduced
+% deterministic perturbations based on Hadamard matrices for 1SPSA, both for one simulation 
+% \cite{spall2} and two simulation \cite{spall} variants of the algorithm that empirically 
+% perform better than 1SPSA. We introduce deterministic perturbations based on circulant 
+% matrices for gradient estimate of 1RDSA and 1s-1RDSA. We prove that 1RDSA and 1s-1RDSA 
+% with these perturbations (1RDSA-C,1s-1RDSA-C) converges to the local minimum of the objective 
+% funtion of the optimization problem. Further our numerical experiments show that 
+% 1RDSA-C (1s-1RDSA-C)
+% outperforms 1SPSA (1s-1SPSA) and 1SPSA with Hadamard perturbations,1SPSA-H (1s-1SPSA-H).
+% 
+% Moreover our circulant matrix based perturbations has the advantage of being useful for
+% both one simulation and two simulation variants of the algorithm without any modification.
+% Also the results shown to construct the perturbations may be of independent interest.
+ 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{INTRODUCTION}
+Simulation optimization problems frequently arise in engineering disciplines like 
+transportation systems, machine learning, service systems, manufacturing etc. 
+Practical limitations, lack of model information and the large dimensionality of these 
+problems prohibit analytic solution of these problems and simulation is often employed to 
+evaluate a system in these disciplines. Hence simulation budget becomes critical and 
+one aims to converge to optimal parameters using as few simulations as possible.
+
+To state the problem formally, consider a system where noise-corrupted feedback of the 
+system is available i.e., given the system parameter $\theta$ the feedback that is 
+available is $h(\theta, \xi)$ where $\xi$ is the noise term inherent in the system, 
+pictorially shown in Figure \ref{fig:so}. The objective in these problems is to find a 
+parameter vector that gives the optimal expected performance of the system. 
+Suppose $J(\theta)=\E_{\xi}[h(\theta, \xi)]$ then $h(\theta, \xi)=J(\theta)+M(\theta,\xi)$ 
+where $M(\theta,\xi)=h(\theta, \xi)-\E_{\xi}[h(\theta, \xi)]$ is a mean zero term. Hence, one 
+needs to solve the following optimization problem:
+\begin{align}
+\mbox{Find } \theta^* = \arg\min_{\theta \in \R^p} J(\theta). \label{eq:pb}
+\end{align}
+Analogous to deterministic optimization problems, where explicit analytic gradient of the 
+objective function is available, a solution approach could be to devise an algorithm that 
+mimics the familiar gradient descent algorithm. However in our setting only noise corrupted 
+samples of the objective are available. So one essentially needs to estimate the gradient 
+of the objective function using simulation samples.
+
+This adaptive system optimization framework has its roots in the work by 
+Robbins and Monro \cite{robbins1951} and Kiefer and Wolfowitz \cite{kiefer1952}. 
+The work by Kiefer and Wolfowitz uses stochastic approximation framework by 
+Robbins and Monro to optimize an objective using noisy samples. In their work
+Kiefer and Wolfowitz \cite{kiefer1952} use 
+one-sided or two-sided approximation of the gradient. 
+This method has the drawback of using $p+1$ simulations for one-sided approximation and
+$2p$ simulations for two-sided approximation of the gradient for a 
+$p$-dimensional problem. Later works \cite{kushcla},\cite{spall} have replaced the 
+gradient approximation using finite differences with random perturbations.
+
+Simultaneous perturbation is a useful technique to estimate the gradient from the function 
+samples, especially in high dimensional problems - see \cite{bhatnagar-book},
+\cite{spallbook} for a comprehensive treatment of this subject matter.
+The first-order Simultaneous Perturbation Stochastic Approximation algorithm for 
+simulation optimization, henceforth referred to as 1SPSA-2R, was 
+proposed in \cite{spall}. 1SPSA-2R uses two simulations per iteration and random 
+perturbations to perturb the parameter vector. 
+A one measurement variant of \cite{spall} is proposed in \cite{spall2} which we refer here
+as 1SPSA-1R.
+A closely related algorithm is the first-order Random Directions 
+Stochastic Approximation henceforth referred to as 1RDSA-2R that appears in
+\cite[pp.~58-60]{kushcla}.
+The algorithm 1RDSA-2R differs from 1SPSA-2R, both in the construction as well as 
+convergence analysis and performs poorly compared to 1SPSA-2R, see 
+\cite{chin1997comparative} for a detailed comparative study. 
+
+To enhance the performance of 1SPSA-2R and 1SPSA-1R, \cite{bhatnagar2003two}
+proposed deterministic perturbations based on Hadamard matrices.
+We refer here the variants of 1SPSA-2R and 1SPSA-1R that use Hadamard perturbations as
+1SPSA-2H and 1SPSA-1H. Analogous to their work we propose deterministic perturbations
+for 1RDSA-2R and its  one simulation variant (referred as 1RDSA-1R here) based on a
+specially chosen circulant matrix.
+\tikzstyle{block} = [draw, fill=white, rectangle,
+   minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=white, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+\begin{figure}[t]
+    \centering
+\scalebox{0.8}{\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+% We start by placing the blocks
+\node (theta) {$\boldsymbol{\theta}$};
+\node [block, fill=blue!20,right=0.6cm of theta,align=center] (sample) {\makecell{\textbf{System simulator}}}; 
+\node [right=0.6cm of sample] (end) {$\boldsymbol{{h(\theta, \xi)}}$};
+\node [ above right= 0.6cm of end] (bias){\textbf{feedback}};
+\draw [->] (theta) --  (sample);
+\draw [->] (sample) -- (end);
+\path [darkgreen,->] (bias) edge [bend left] (end);
+\end{tikzpicture}}
+\caption{Simulation Optimization Model}
+\label{fig:so}
+\end{figure}
+\section{MOTIVATION}
+Here we motivate the necessary conditions that deterministic perturbations should satisfy.
+Analogous properties for Hadamard matrix based perturbations are well motivated in 
+\cite{bhatnagar-book}.
+Both 1SPSA-2R and 1RDSA-2R iteratively update the parameter vector and a typical update step
+is of the following form:
+\begin{align}
+\label{eq:grad-descent}
+\theta_{n+1} = \theta_n - a_n \widehat\nabla J(\theta_n), 
+\end{align}
+where $a_n$ is the step-size that satisfies standard stochastic approximation 
+conditions (see (A2) in section \ref{sec:convergenceresults}) and $\widehat\nabla 
+J(\theta)$ is an estimate of the gradient of the objective function $J$.
+Thus, \eqref{eq:grad-descent} can be considered as 
+the stochastic version of the well-known gradient descent method for optimization. 
+% Now consider the Taylor series expansion of $J(\theta_n+\delta_nd_n)$ around
+% $\theta_n$, we have
+% \begin{equation} \label{eq:pTaylor}
+% J(\theta_n+\delta_nd_n)=
+% J(\theta_n)+\delta_nd_n^T \nabla J(\theta_n)+o(\delta_n).
+% \end{equation}
+% Similarly, an expansion of $J(\theta_n-\delta_n d_n)$ around $\theta_n$ gives
+% \begin{equation} \label{eq:nTaylor}
+% J(\theta_n-\delta_n d_n)=
+% J(\theta_n)-\delta_n d_n^T \nabla J(\theta_n)+o(\delta_n).
+% \end{equation}
+% From \eqref{eq:pTaylor} and \eqref{eq:nTaylor}, we have
+% \begin{align}\label{eq:Taylor}
+% &\frac{J(\theta_n+\delta_n d_n)-J(\theta_n-\delta_n d_n)}{2\delta_n}d_n
+% - \nabla J(\theta_n) \\
+% &= (d_nd_n^T-I)\nabla J(\theta_n)+o(\delta_n).
+% \end{align}
+Now consider the Taylor series expansion of $J(\theta_n \pm \delta_nd_n)$ around
+$\theta_n$, we have
+ \begin{equation} \label{eq:pmTaylor}
+ J(\theta_n \pm \delta_nd_n)=
+ J(\theta_n) \pm \delta_nd_n^T \nabla J(\theta_n)+o(\delta_n).
+\end{equation}
+From \eqref{eq:pmTaylor}, we have
+\begin{align}\label{eq:Taylor}
+&\frac{J(\theta_n+\delta_n d_n)-J(\theta_n-\delta_n d_n)}{2\delta_n}d_n
+ - \nabla J(\theta_n) \\
+&= (d_nd_n^T-I)\nabla J(\theta_n)+o(\delta_n).
+\end{align}
+Note that $(d_nd_n^T-I)\nabla J(\theta_n)$ constitutes the bias in the
+gradient estimate and
+from the assumption (A3) in section \ref{sec:convergenceresults}
+\begin{equation}\label{eq:2sidedbias}
+\mathbb{E}\Big{[}(d_nd_n^T-I)\nabla J(\theta_n)\Big{|}\theta_n\Big{]}=0.
+\end{equation}
+In the case of a one-simulation algorithm with parameter $\theta_n+\delta_n d_n$,
+a similar Taylor series expansion gives
+\begin{align}\label{eq:1sided}
+&\frac{J(\theta_n+\delta_n d_n)}{\delta_n}d_n
+- \nabla J(\theta_n) \\
+&=\frac{J(\theta_n)}{\delta_n}d_n
++(d_nd_n^T-I)\nabla J(\theta_n)+O(\delta_n).
+\end{align}
+One expects the following to hold in addition to \eqref{eq:2sidedbias} in the case of 
+random perturbations for one simulation algorithms:
+\begin{equation}\label{eq:1sidedbias}
+\mathbb{E}\Big{[}\frac{J(\theta_n)}{\delta_n}d_n\Big{|}\theta_n\Big{]}=0. 
+\end{equation}
+Notice that \eqref{eq:2sidedbias} and \eqref{eq:1sidedbias} are achieved asymptotically 
+for a random perturbation direction $d_n$, for example with $\pm 1$ symmetric Bernoulli 
+components, $d_n$ has to cycle through $2^p$ possible vectors in the range to achieve bias 
+cancellation. Clearly one is motivated to look for perturbations that satisfy similar 
+properties and have a smaller cycle length for faster bias cancellation and thereby 
+improve the performance of the algorithm. 
+Analogous to \eqref{eq:2sidedbias} and \eqref{eq:1sidedbias} we expect deterministic sequence 
+of perturbations to satisfy the following properties:
+\begin{enumerate}[label=\textbf{(P\arabic*)}]
+  \item Let $D_n:=d_nd_n^T-I.$ For any $s \in \mathbb{N}$ there exists a 
+  $P \in \mathbb{N}$ such that $\sum\limits_{n=s+1}^{s+P}D_n=0$ and,
+  \item  $\sum\limits_{n=s+1}^{s+P}d_n=0.$
+\end{enumerate}
+In the following sections we construct deterministic perturbations which satisfy (P1) and (P2)
+and provide convergence results for the resulting 1RDSA-2C and 1RDSA-1C algorithms.
+
+The rest of the paper is organized as follows: In section \ref{sec:algo}, we
+describe the various ingredients in algorithm \ref{alg:structure} and the construction
+of perturbations $d_n$.
+In section \ref{sec:convergenceresults}, 
+we present the convergence results for 1RDSA-2C and 1RDSA-1C algorithms.
+In section~\ref{sec:expts}, we present the results from numerical experiments and finally, 
+in section~\ref{sec:conclusions}, we provide the concluding remarks.
+\section{STRUCTURE OF THE ALGORITHM}
+\label{sec:algo}
+\begin{algorithm}[t]
+\begin{algorithmic}
+\State {\bf Input:}
+\begin{itemize}
+ \item $\theta_0 \in \mathbb{R}^p,$ initial parameter vector;
+ \item $\delta_n, n \geq 0,$ a sequence to approximate gradient;
+ \item Matrix of perturbations $$Q=\sqrt{p+1}[H^{-1/2},-H^{-1/2}u],$$ 
+ with $u=[1,1,\cdots,1]^T;$
+ \item noisy measurement of cost objective $J$;
+ \item $a_n, n \geq 0,$ step-size sequence satisfying assumption \ref{stepsizes} of 
+ section \ref{sec:convergenceresults};
+\end{itemize}
+\For{$n = 1,2,\ldots n_{\text{end}}$}	
+	\State Let $d_n$ be mod$(n,p+1)^{\text{th}}$ column of $Q$. 
+	\State Update the parameter as follows:
+  \begin{equation}
+  \theta_{n+1}=\theta_n-a_n \widehat\nabla J(\theta_n), \label{eq:algo}
+  \end{equation}
+where $\widehat\nabla J(\theta_n)$ is chosen according to \eqref{eq:grad-twosided} 
+or \eqref{eq:grad-onesided}. 
+\EndFor
+\State {\bf Return} $\theta_{n_{\text{end}}}.$
+\end{algorithmic}
+\caption{Basic structure of 1RDSA-2C and 1RDSA-1C algorithms.}
+\label{alg:structure}
+\end{algorithm}
+Algorithm \ref{alg:structure} presents the basic structure of 
+1RDSA-2C and 1RDSA-1C. We describe the individual 
+components of algorithm \ref{alg:structure} below.
+\subsection{Deterministic Pertubations}
+Let $\delta_n, n\geq 0$ denote a sequence of diminishing positive real numbers satisfying 
+assumption (A2) in section \ref{sec:convergenceresults} and 
+$d_n = (d_n^1,\ldots,d_n^p)\tr$ denote $(p+1)$ mod $n$ column of $Q.$
+where $Q$ is constructed as follows. 
+Let $H$ be the $p \times p$ dimensional matrix defined as:
+\begin{equation}\label{eq:H}
+H = \left[\begin{array}{cccc}
+2 \ 1 \ 1 \cdots 1\\ 
+1 \ 2 \ 1 \cdots 1 \\
+\vdots \ \vdots \ \vdots \ \vdots\\
+1 \ 1 \ 1 \cdots 2
+\end{array}\right].
+\end{equation}
+Observe that $H=I+uu^T$, where $u=[1,1,\cdots,1]^T$, is a positive definite matrix. Hence $H^{-1/2}$ is well defined.
+Define $p\times (p+1)$ matrix $Q$ as $Q=\sqrt{p+1}[H^{-1/2},-H^{-1/2}u].$ The columns of
+$Q$ are used as perturbations $d_n.$
+\subsection{Gradient estimation}
+Let $y_{n}^{+}$, $y_{n}^{-}$  be defined as below.
+$y_{n}^{+} = J(\theta_n+\delta_n d_n) + M_{n}^{+}$ and 
+$y_{n}^{-} = J(\theta_n-\delta_n d_n) + M_{n}^{-}$,
+where the noise terms $M_{n}^{+}, M_{n}^{-}$ satisfy $\E\left[\left.M_{n}^{+}- 
+M_{n}^{-}\right| \F_n\right] = 0$ with $\F_n = \sigma(\theta_m, m\le n)$ 
+denoting the underlying sigma-field. 
+The estimate of the gradient $\nabla J(\theta_n)$ is given by
+\begin{align}
+\label{eq:grad-twosided}
+\widehat\nabla J(\theta_n)=
+\left[\dfrac{(y_{n}^{+} - y_{n}^{-})d_n}{2\delta_n}\right] \text{ for 1RDSA-2C}
+\end{align}
+\begin{align}
+\label{eq:grad-onesided}
+\widehat\nabla J(\theta_n)=
+\left[\dfrac{(y_{n}^{+})d_n}{\delta_n}\right] \text{ for 1RDSA-1C}
+\end{align}
+Observe that while 1RDSA-2C algorithm uses two function samples $y_{n}^{+}$ and $y_{n}^{-}$ 
+at $\theta_n+\delta_n d_n$ and $\theta_n - \delta_n d_n$, 1RDSA-1C algorithm 
+uses only one function sample $y_{n}^{+}$ at $\theta_n+\delta_n d_n$.
+\input{results}
+\input{SimExpmts}
+\section{CONCLUSIONS}
+\label{sec:conclusions}
+We presented a novel construction of deterministic perturbations for 
+1RDSA-2R and 1RDSA-1R algorithms and showed that the resulting algorithms 
+1RDSA-2C and 1RDSA-1C are provably convergent. 
+The advantage with our deterministic perturbation construction is that the
+same set of perturbations can be used for both two simulation
+and one simulation variants. These perturbations also have a smaller cycle length compared to 
+Hadmard matrix based perturbations. Numerical experiments demonstrated that 1RDSA-2C (1RDSA-1C) outperforms 
+1SPSA-2R (1SPSA-1R) and 1SPSA-2H (1SPSA-1H).
+As future work, it would be interesting to derive similar methods in the context of 
+2RDSA. A challenging future direction would be to derive weak convergence results when
+deterministic perturbations are used.
+\bibliography{reference}
+\bibliographystyle{IEEEtran}
+\end{document}
