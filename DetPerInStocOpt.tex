@@ -281,9 +281,9 @@ in section~\ref{sec:conclusions}, we provide the concluding remarks.
 \For{$n = 1,2,\ldots n_{\text{end}}$}	
 	\State Let $d_n$ be mod$(n,p+1)^{\text{th}}$ column of $Q$. 
 	\State Update the parameter as follows:
-  \begin{equation}
-  \theta_{n+1}=\theta_n-a_n \widehat\nabla J(\theta_n), \label{eq:algo}
-  \end{equation}
+  \begin{equation*}
+  \theta_{n+1}=\theta_n-a_n \widehat\nabla J(\theta_n)
+  \end{equation*}
 where $\widehat\nabla J(\theta_n)$ is chosen according to \eqref{eq:grad-twosided} 
 or \eqref{eq:grad-onesided}. 
 \EndFor
