@@ -67,6 +67,17 @@ D.~C. Chin, ``Comparative study of stochastic algorithms for system
   Systems, Man, and Cybernetics, Part B: Cybernetics}, vol.~27, no.~2, pp.
   244--249, 1997.
 
+\bibitem{prashanth2015rdsa}
+L.~A. Prashanth, S.~Bhatnagar, M.~Fu, and S.~Marcus, ``{Adaptive system
+  optimization using random directions stochastic approximation},'' \emph{IEEE
+  Transactions on Automatic Control (To appear)}, 2017.
+
+\bibitem{reddy2016improved}
+D.~S.~K. Reddy, L.~Prashanth, and S.~Bhatnagar, ``Improved hessian estimation
+  for adaptive random directions stochastic approximation,'' in \emph{Decision
+  and Control (CDC), 2016 IEEE 55th Conference on}.\hskip 1em plus 0.5em minus
+  0.4em\relax IEEE, 2016, pp. 3682--3687.
+
 \bibitem{bhatnagar2003two}
 S.~Bhatnagar, M.~C. Fu, S.~I. Marcus, I.~Wang \emph{et~al.}, ``Two-timescale
   simultaneous perturbation stochastic approximation using deterministic

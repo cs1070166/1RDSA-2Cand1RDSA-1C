@@ -5,7 +5,7 @@ few minor alterations. The assumptions are listed below. Also $\|.\|$ denotes 2-
 More detailed proofs of the results are presented in the archived version \cite{2017arXiv170206250K}.
 \begin{enumerate}[label= \textbf{(A\arabic*)}]
  \item The map $J:\mathbb{R}^p \rightarrow \mathbb{R}$ is Lipschitz continuous and 
- is differentiable with bounded second order derivatives. Further, 
+ is differentiable with bounded second and third order derivatives. Further, 
  the map $L:\mathbb{R}^p \rightarrow \mathbb{R}^p$ defined as 
  $L(\theta)=-\nabla J(\theta)$ is Lipschitz continuous.
  \item The step-size sequences $a_n, \delta_n >0, \forall n $  satisfy
@@ -30,15 +30,16 @@ More detailed proofs of the results are presented in the archived version \cite{
  (i.e., the set of local minima of $J$ is compact).
  
  
- \item The sequences $(M_{n}^{+},\F_n),(M_{n}^{-},\F_n), n\geq0 $ form martingale difference sequences.
- Further, $(M_{n}^{+},M_{n}^{-},n\geq0)$ are square integrable random variables satisfying
- $$\E[\|M_{n+1}^{\pm}\|^2|\F_n]\leq K(1+\|\theta_n\|^2) \text{ a.s., } \forall n\geq0,$$
+ \item The noise sequences $(N_{n}^{\pm},\F_n), n\geq0 $ form martingale difference sequences.
+ Further, $(N_{n}^{\pm} ,n\geq0)$ are square integrable random variables satisfying
+ $$\E[\|N_{n}^{\pm}\|^2|\F_n]\leq K(1+\|\theta_n\|^2) \text{ a.s., } \forall n\geq0,$$
  for a given constant $K \geq 0.$
  
 \end{enumerate}
 The following lemma is useful in obtaining the negative square root of $H$ i.e., 
-$H^{-1/2}$. Also note that it takes only $O(p)$ operations to compute $H^{-1/2}$
-using the lemma and circulant structure of $H^{-1/2}$.
+$H^{-1/2}$. Also note that it takes only $O(p^2)$ operations to compute $H^{-1/2}$
+using the lemma and circulant structure of $H^{-1/2}$. To the best of our knowledge this
+lemma is original and may be of independent interest.
 \begin{lemma}
  \label{lemma: gen Sherman-Morisson}
 Let $I$ be a $p \times p$ identity matrix and \\
@@ -116,28 +117,28 @@ proving the lemma.
  \begin{align*}
  \begin{split}
  \theta_{n+k} = \theta_n & -\sum_{j=n}^{n+k-1}a_j\Bigg{(}\frac{J(\theta_j+\delta_j d_j)-J(\theta_j-\delta_j d_j)}{2\delta_j}\Bigg{)}d_j \\ 
-  &-\sum_{j=n}^{n+k-1}a_jM_{j+1}.
+  &-\sum_{j=n}^{n+k-1}a_jN_{j}.
  \end{split}
  \end{align*}
  Thus,
  \begin{align*}
  \begin{split}
  \|\theta_{n+k}-\theta_n\| &\leq \sum_{j=n}^{n+k-1}a_j\Bigg{|}\frac{J(\theta_j+\delta_{j} d_j)-J(\theta_j-\delta_{j} d_j)}{2\delta_j}\Bigg{|}\|d_j\|\\
- &+\sum_{j=n}^{n+k-1}a_j\|M_{j+1}\|
+ &+\sum_{j=n}^{n+k-1}a_j\|N_{j}\|
 \end{split}
 \end{align*}
 Now clearly,
-$N_n=\sum\limits_{j=0}^{n-1}a_jM_{j+1}, n\geq1,$
+$M_n=\sum\limits_{j=0}^{n-1}a_jN_{j}, n\geq1,$
 forms a martingale sequence with respect to the filtration $\{\F_n\}$.
 Further, from the assumption (A6) we have,
 \begin{align*}
-\sum_{m=0}^{n}\mathbb{E}[\|N_{m+1}-N_{m}\|^2|\mathcal{F}_{m}]& =\sum_{m=0}^{n}\mathbb{E}[a_{m}^2\|M_{m+1}\|^2|\mathcal{F}_{m}]\\
+\sum_{m=0}^{n}\mathbb{E}[\|M_{m+1}-M_{m}\|^2|\mathcal{F}_{m}]& =\sum_{m=0}^{n}\mathbb{E}[a_{m}^2\|N_{m}\|^2|\mathcal{F}_{m}]\\
 & \leq \sum_{m=0}^{n}a_{m}^2K(1+\|\theta_m\|^2)
 \end{align*}
-From the assumption (A4), the quadratic variation process of $N_n,n\geq0$ converges 
+From the assumption (A4), the quadratic variation process of $M_n,n\geq0$ converges 
 almost surely. Hence by the martingale convergence theorem, it follows that 
-$N_n, n\geq0$ converges almost surely. Hence
-$\|\sum\limits_{j=n}^{n+k-1}a_jM_{j+1}\|\rightarrow 0$ almost surely as $n\rightarrow \infty.$
+$M_n, n\geq0$ converges almost surely. Hence
+$\|\sum\limits_{j=n}^{n+k-1}a_jN_{j}\|\rightarrow 0$ almost surely as $n\rightarrow \infty.$
 Moreover
 \begin{align*}
 &\Big{\|}\Big{(}J(\theta_j+\delta_j d_j)-J(\theta_j-\delta_j d_j)\Big{)}d_j\Big{\|} \\
@@ -158,7 +159,7 @@ From assumption (A1), it follows that
 $$\sup_j\Big{\|}\Big{(}J(\theta_j+\delta_j d_j)-J(\theta_j-\delta_j d_j)\Big{)}d_j\Big{\|}\leq \tilde{K}<\infty,$$
 for some $\tilde{K}>0.$ Thus,
 \newline
-$\|\theta_{n+k}-\theta_n\| \leq \tilde{K}\sum\limits_{j=n}^{n+k-1}\frac{a_j}{\delta_j}+\|\sum_{j=n}^{n+k-1}a_jM_{j+1}\|$
+$\|\theta_{n+k}-\theta_n\| \leq \tilde{K}\sum\limits_{j=n}^{n+k-1}\frac{a_j}{\delta_j}+\|\sum_{j=n}^{n+k-1}a_jN_{j}\|$
 \newline
 $\rightarrow 0 \text{ a.s. with } n \rightarrow \infty,$
 proving the lemma.
@@ -210,38 +211,38 @@ $\text{almost surely, as } m \rightarrow \infty.$
 The claim now follows as a consequence of assumptions (A1) and (A2).
 \end{proof}
 \begin{theorem}
- $\theta_n, n\geq0$ obtained from 1RDSA-2C satisfy $\theta_n \rightarrow G$
+ Let $G$ be as in assumption (A5). $\theta_n, n\geq0$ obtained from 1RDSA-2C satisfy $\theta_n \rightarrow G$
  almost surely.
 \end{theorem}
 \begin{proof}
  Note that
  \begin{equation*}
-  \theta_{n+P} = \theta_n-\sum\limits_{l=n}^{n+P-1}a_l\Big{[}\frac{J(\theta_l+\delta_l d_l)-J(\theta_l-\delta_l d_l)}{2\delta_l}d_l+M_{l+1}\Big{]}.
+  \theta_{n+P} = \theta_n-\sum\limits_{l=n}^{n+P-1}a_l\Big{[}\frac{J(\theta_l+\delta_l d_l)-J(\theta_l-\delta_l d_l)}{2\delta_l}d_l+N_{l}\Big{]}.
  \end{equation*}
 It follows that
  \begin{align*}
   \begin{split}
   & \theta_{n+P} = \theta_n-\sum_{l=n}^{n+P-1}a_l\nabla J(\theta_l) 
    -\sum_{l=n}^{n+P-1}a_l(d_ld_l^T-I)\nabla J(\theta_l)\\
-  & -\sum_{l=n}^{n+P-1}a_l \xi^{1}(\delta_l)-\sum_{l=n}^{n+P-1}a_lM_{l+1}\\
+  & -\sum_{l=n}^{n+P-1}a_l \xi^{1}(\delta_l)-\sum_{l=n}^{n+P-1}a_lN_{l}\\
   \end{split}
  \end{align*}
 Now the third term on the RHS can be written as
 $$a_n\sum_{l=n}^{n+P-1}\frac{a_l}{a_n}D_{l}\nabla J(\theta_l)=a_n\xi_{n},$$
 where $\xi_{n}=o(1)$ from lemma 4.
 Thus, the algorithm is asymptotically analogous to
-$$\theta_{n+1}=\theta_n-a_n(\nabla J(\theta_n)+o(\delta)+M_{n+1}).$$
+$$\theta_{n+1}=\theta_n-a_n(\nabla J(\theta_n)+o(\delta)+N_{n}).$$
 Hence from chapter 2 of \cite{borkar2008stochastic} we have that $\theta_n, n\geq0$ converge to
 local minima of the function $J.$
 \end{proof}
 \begin{theorem}
-  $\theta_n, n\geq0$ obtained from 1RDSA-1C satisfy $\theta_n \rightarrow G$
+ Let $G$ be as in assumption (A5). $\theta_n, n\geq0$ obtained from 1RDSA-1C satisfy $\theta_n \rightarrow G$
  almost surely.
 \end{theorem}
 \begin{proof}
 Note that
  \begin{align*}
- \theta_{n+P} = \theta_n-\sum_{l=n}^{n+P-1}a_l\Big{(}\frac{J(\theta_l+\delta_l d_l)}{2\delta_l}\Big{)}d_l-\sum_{l=n}^{n+P-1}a_lM_{l+1}.
+ \theta_{n+P} = \theta_n-\sum_{l=n}^{n+P-1}a_l\Big{(}\frac{J(\theta_l+\delta_l d_l)}{2\delta_l}\Big{)}d_l-\sum_{l=n}^{n+P-1}a_lN_{l}.
  \end{align*} 
 It follows that
  \begin{align*}
@@ -249,7 +250,7 @@ It follows that
   & \theta_{n+P} = \theta_n- \sum_{l=n}^{n+P-1}a_l\nabla J(\theta_l) 
   -\sum_{l=n}^{n+P-1}a_l\frac{J(\theta_l)}{\delta_l}d_l\\
   &-\sum_{l=n}^{n+P-1}a_l(d_ld_l^T-I)\nabla J(\theta_l)-\sum_{l=n}^{n+P-1}a_lO(\delta_l)\\
-  &-\sum_{l=n}^{n+P-1}a_lM_{l+1}
+  &-\sum_{l=n}^{n+P-1}a_lN_{l}
  \end{split}
  \end{align*}
  Now we observe that the third term on the RHS is

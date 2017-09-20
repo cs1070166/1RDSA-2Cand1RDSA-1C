@@ -2,14 +2,17 @@
 \label{sec:expts}
 \subsection{Implementation}
 We compare the performance of 1SPSA-2R, 1SPSA-2H and 1RDSA-2C in the case of 
-two simulation algorithms. In the case of one simulation algorithms we compare the 
+two simulation algorithms. We compare 1RDSA-2C with 1SPSA-2R instead of 1RDSA-2R as 1SPSA-2R performs 
+better compared to 1RDSA-2R \cite{chin1997comparative}. 
+In the case of one simulation algorithms we compare the 
 performance of 1SPSA-1R, 1SPSA-1H and 1RDSA-1C. 
 We chose i.i.d Bernoulli $\pm 1$-valued perturbations for 1SPSA-2R and 1SPSA-1R.
 \footnote{The implementation is available at 
 \url{https://github.com/cs1070166/1RDSA-2Cand1RDSA-1C/}}
 
-For the empirical evaluations, 
-we use the following two loss functions in $p=10$ dimensions:
+The following loss functions have been widely used in the literature \cite{spall_adaptive}, 
+\cite{reddy2016improved} for the empirical evaluations. 
+We use these loss functions in $p=10$ dimensions:
 \paragraph{Quadratic loss}
 \begin{align}
 J(\theta) = \theta\tr A \theta + b\tr \theta. \label{eq:quadratic}
@@ -24,7 +27,7 @@ J(\theta) = \theta \tr A\tr A\theta+0.1 \sum_{j=1}^N (A\theta)^3_j+0.01 \sum_{j=
  \end{align} 
 The optimum $\theta^*$ for the above $J$ is $\theta^*=0$, with $J(\theta^*) = 0$. 
 In both functions, $A$ is such that $pA$ is an upper triangular matrix with each 
-nonzero entry equal to one, $b$ is the $N$-dimensional vector of ones and 
+nonzero entry equal to one, $b$ is the $p$-dimensional vector of ones and 
 the noise structure is similar to that used in \cite{spall_adaptive}. 
 For any $\theta$, the noise is $[\theta\tr, 1]z$, where $z \approx \N(0,\sigma^2 I_{11\times11})$.
 We perform experiments for noisy as well as noise-less settings, with $\sigma=0.01$ for
