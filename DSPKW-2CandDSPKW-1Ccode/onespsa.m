@@ -4,10 +4,6 @@
 %for purposes of statistical evaluation based on knowledge of true (noise-free) loss value
 %(set replications=1 if user only wants one run).
 
-% Prashanth L.A., Jul. 2015
-% The code below is from J.C. Spall's ISSO book website, except that it
-% does not perform any "blocking" test for the parameter.
-% 
 % Parameters:
 % p -> dimension of the problem
 % sigma -> noise parameter. Noise is (p+1)-dimensional Gaussian with variance sigma^2
