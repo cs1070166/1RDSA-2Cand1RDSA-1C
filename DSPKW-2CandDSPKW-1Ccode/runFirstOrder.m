@@ -82,15 +82,6 @@ legend('1SPSA-2R','1SPSA-2H','1RDSA-2C');
 % Hadamard_std_1sim=std(Hadamard_Results_1sim,0,2);
 % Circulant_std_1sim=std(Circulant_Results_1sim,0,2);
 % 
-% 
-% %  I=1:length(oneSPSA_mean_1sim);
-% %  jbfill(I,(log10(oneSPSA_mean_1sim+oneSPSA_std_1sim))',(log10(oneSPSA_mean_1sim-oneSPSA_std_1sim))',[1 0 0],[1 0 0],0,0.2);
-% %  hold on;
-% %  jbfill(I,(log10(Hadamard_mean_1sim+Hadamard_std_1sim))',(log10(Hadamard_mean_1sim-Hadamard_std_1sim))',[0 1 1],[0 0 1],0,0.2);
-% %  hold on;
-% %  jbfill(I,(log10(Circulant_mean_1sim+Circulant_std_1sim))',(log10(Circulant_mean_1sim-Circulant_std_1sim))',[1 1 0],[0 1 0],0,0.2);
-% %  hold on
-%  
 %  
 %  plot(log10(oneSPSA_mean_1sim),'r-');
 %  hold on;
